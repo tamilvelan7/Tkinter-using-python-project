@@ -1,0 +1,36 @@
+from tkinter import *
+from tkinter import messagebox
+from PIL import ImageTk, Image
+top =Tk()
+top.title("learnifite")
+top.geometry('725x900')
+imag=ImageTk.PhotoImage(Image.open('learnifite.jpg'))
+llbl=Label(top,image=imag).place(x=550,y=10)
+lbl=Label(top,text="Hello, everyone welcome to learnifite ",font=('arial',16,'bold')).grid(column=1,row=1)
+lbl2=Label(top,text="Products ",font=('arial',14,'bold')).grid(column=0,row=2)
+lbl3=Label(top,text='o Ethical hacking \n\no C program \n\no Python masterclass \n\n"Continue to learn and brighten your future" ',justify="left",font=('arial',12,'bold')).place(x=0,y=65)
+lbl4=Label(top,text="Please fill the below form \n\n\nName \n\n\nEmail ID \n\n\nPhone No",justify="left",font=('arial',10,'bold')).place(x=0,y=220)
+def clicked():
+    messagebox.showinfo("form", "Submitted data successfully")
+def clear():
+   name.delete(0,END)
+   email.delete(0,END)
+   Phone.delete(0,END)
+def gett():
+    list_1=[]
+    name_1=name.get()
+    email_1=email.get()
+    Phone_1=Phone.get()
+    for i in name_1,email_1,Phone_1:
+        list_1.append(i)
+    for j in list_1:
+        print(j)
+name=Entry(top,width=50)
+name.place(x=150,y=270)
+email=Entry(top,width=50)
+email.place(x=150,y=315)
+Phone=Entry(top,width=50)
+Phone.place(x=150,y=360)
+btn=Button(top,text='Submit',command=lambda:[clicked(),gett()]).place(x=360,y=400)
+btn=Button(top,text='Clear',command=clear).place(x=417,y=400)
+top.mainloop()

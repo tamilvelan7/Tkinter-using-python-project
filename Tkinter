@@ -34,3 +34,233 @@ Phone.place(x=150,y=360)
 btn=Button(top,text='Submit',command=lambda:[clicked(),gett()]).place(x=360,y=400)
 btn=Button(top,text='Clear',command=clear).place(x=417,y=400)
 top.mainloop()
+
+import subprocess
+import time
+import threading
+from tkinter import ttk
+import tkinter as tk
+window = tk.Tk()
+# width = window.winfo_screenwidth()
+# height = window.winfo_screenheight()
+# window.geometry("%dx%d" % (width, height))
+
+window.geometry("600x400")
+window.title("Trinity")
+
+
+
+link=open('config.txt','r')
+config_data=link.read().splitlines()
+text_file1=config_data[0]
+text_file2=config_data[1]
+text_file3=config_data[2]
+text_file4=config_data[3]
+ip_address1=config_data[4]
+effect1=config_data[5]
+effect2=config_data[6]
+effect3=config_data[7]
+effect4=config_data[8]
+duration=config_data[9]
+print('Text_File: '+text_file1+'\n'+'Ip_Address: '+ip_address1+'\n'+"Effect: "+"'3 0 0 1 0 2 255 0 0'"+'\n'+"duration: "+effect1)
+print('Text_File: '+text_file2+'\n'+'Ip_Address: '+ip_address1+'\n'+"Effect: "+"'4 0 0 1 0 2 255 0 0'"+'\n'+"duration: "+effect2)
+print('Text_File: '+text_file3+'\n'+'Ip_Address: '+ip_address1+'\n'+"Effect: "+"'5 0 0 1 0 2 255 0 0'"+'\n'+"duration: "+effect3)
+print('Text_File: '+text_file4+'\n'+'Ip_Address: '+ip_address1+'\n'+"Effect: "+"'6 0 0 1 0 2 255 0 0'"+'\n'+"duration: "+effect4)
+link.close()
+count=1
+def send_data():
+    try:
+        url1=open(text_file1,'r')
+        url2=open(text_file2,'r')
+        url3=open(text_file3,'r')
+        url4=open(text_file4,'r')
+        url_text1=url1.read().splitlines()
+        url_text2=url2.read().splitlines()
+        url_text3=url3.read().splitlines()
+        url_text4=url4.read().splitlines()
+        ########################################################
+        cmd='gled '+ip_address1+' 1 9 "'+url_text1[0]+'" '+' '+effect1
+        print(url_text1[0])
+        subprocess.call(cmd, shell=True)
+        time.sleep(0.15)
+        ########################################################
+        cmd='gled '+ip_address1+' 1 9 "'+url_text2[0]+'" '+' '+effect2
+        print(url_text2[0])
+        subprocess.call(cmd, shell=True)
+        time.sleep(0.15)
+        ########################################################
+        cmd='gled '+ip_address1+' 1 9 "'+url_text3[0]+'" '+' '+effect3
+        print(url_text3[0])
+        subprocess.call(cmd, shell=True)
+        time.sleep(0.15)
+        ########################################################
+        cmd='gled '+ip_address1+' 1 9 "'+url_text4[0]+'" '+' '+effect4
+        print(url_text4[0])
+        subprocess.call(cmd, shell=True)
+        time.sleep(0.15)
+        url1.close()
+        url2.close()
+        url3.close()
+        url4.close()
+
+
+        label_10= tk.Label(window, text="Send Successfully "+str(count), font=('Arial', 10))
+        label_10.config(fg='green')
+        label_10.place(x=700, y=650)
+        count+1
+
+    except:
+        label_10 = tk.Label(window, text="Data file error or file missing" +str(count), font=('Arial', 10))
+        label_10.config(fg='red')
+        label_10.place(x=700, y=650)
+    finally:
+        threading.Timer(int(duration),send_data).start()
+
+
+label = tk.Label(window, text="LED BOARD CONFIGURE", font=('Dot Matrix', 30,'bold'))
+label.config(fg="red")
+label.pack()
+
+label_1= tk.Label(window, text="IP Address", font=('Arial', 20, 'bold'))
+label_1.place(x=100, y=100)
+
+
+ip_address=tk.StringVar();
+ip_Entry=tk.Entry(window, textvariable=ip_address, font=('Arial', 15))
+ip_Entry.place(x=400, y=110)
+
+label_2= tk.Label(window, text="File Name", font=('Arial', 20, 'bold'))
+label_2.place(x=100, y=180)
+
+file_Name=tk.StringVar();
+file_Entry=tk.Entry(window, textvariable=file_Name, font=('Arial', 15))
+file_Entry.place(x=400, y=190)
+
+ttk.Button(window, text="Add").place(x=625,y=192)
+
+label_3= tk.Label(window, text="Window", font=('Arial', 15))
+label_3.place(x=100, y=250)
+
+current_value6 = tk.StringVar(value=0)
+spin_box = ttk.Spinbox(
+    window,
+    from_=1,
+    to=10,
+    textvariable=current_value6,
+    wrap=True)
+
+spin_box.place(x=400, y=250)
+
+
+label_4= tk.Label(window, text="Effect", font=('Arial', 15))
+label_4.place(x=100, y=300)
+
+current_value5 = tk.StringVar(value=0)
+spin_box = ttk.Spinbox(
+    window,
+    from_=1,
+    to=10,
+    textvariable=current_value5,
+    wrap=True)
+
+spin_box.place(x=400, y=300)
+
+
+label_5= tk.Label(window, text="Font", font=('Arial', 15))
+label_5.place(x=100, y=350)
+
+current_value4 = tk.StringVar(value=0)
+spin_box = ttk.Spinbox(
+    window,
+    from_=1,
+    to=10,
+    textvariable=current_value4,
+    wrap=True)
+
+spin_box.place(x=400, y=350)
+
+label_6= tk.Label(window, text="speed", font=('Arial', 15))
+label_6.place(x=100, y=400)
+
+current_value_s = tk.StringVar(value=0)
+spin_box = ttk.Spinbox(
+    window,
+    from_=1,
+    to=10,
+    textvariable=current_value_s,
+    wrap=True)
+
+spin_box.place(x=400, y=400)
+
+label_5= tk.Label(window, text="Alignment", font=('Arial', 15))
+label_5.place(x=100, y=450)
+
+current_value3 = tk.StringVar(value=0)
+spin_box = ttk.Spinbox(
+    window,
+    from_=1,
+    to=10,
+    textvariable=current_value3,
+    wrap=True)
+
+spin_box.place(x=400, y=450)
+
+label_5= tk.Label(window, text="Alignment 2", font=('Arial', 15))
+label_5.place(x=100, y=500)
+
+current_value2 = tk.StringVar(value=0)
+spin_box = ttk.Spinbox(
+    window,
+    from_=1,
+    to=10,
+    textvariable=current_value2,
+    wrap=True)
+
+spin_box.place(x=400, y=500)
+
+label_7= tk.Label(window, text="R", font=('Arial', 15))
+label_7.place(x=100, y=550)
+
+current_value1 = tk.StringVar(value=255)
+spin_box = ttk.Spinbox(
+    window,
+    from_=0,
+    to=255,
+    textvariable=current_value1,
+    wrap=True)
+
+spin_box.place(x=400, y=550)
+
+
+label_8= tk.Label(window, text="G", font=('Arial', 15))
+label_8.place(x=100, y=600)
+
+current_value_B = tk.StringVar(value=0)
+spin_box = ttk.Spinbox(
+    window,
+    from_=0,
+    to=255,
+    textvariable=current_value_B,
+    wrap=True)
+
+spin_box.place(x=400, y=600)
+
+label_9= tk.Label(window, text="B", font=('Arial', 15))
+label_9.place(x=100, y=650)
+
+current_value = tk.StringVar(value=0)
+spin_box = ttk.Spinbox(
+    window,
+    from_=0,
+    to=255,
+    textvariable=current_value,
+    wrap=True)
+
+spin_box.place(x=400, y=650)
+
+ttk.Button(text='Send', command=send_data).place(x=600,y=645)
+
+
+
+
+window.mainloop()
